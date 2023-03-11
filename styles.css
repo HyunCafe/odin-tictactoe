@@ -1,0 +1,62 @@
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+/* Center the main content of the page */
+.main {
+  margin: 0 auto;
+  max-width: 38em;
+  padding: 20px;
+}
+
+/* Style the game section */
+.main__game {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 35em;
+  padding: 20px;
+}
+
+/* Style the grid cells */
+.grid-cells {
+  background-color: #f5f5f5;
+  border: 1px solid #0b0b0b;
+  height: 10em;
+  margin: 5px;
+  width: 10em;
+}
+
+/* Add hover styles to the grid cells */
+.grid-cells:hover {
+  background-color: #e0e0e0;
+}
+
+/* Style the tracker section */
+.main__tracker {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+/* Style the tracker items */
+.main__tracker-item {
+  text-align: center;
+}
+
+/* Footer */
+.site-footer {
+  background-color: #333333;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+}
