@@ -33,67 +33,57 @@ const createGrid = (rows, cols) => {
 };
 createGrid(3, 3);
 
-// Keep track of the number of moves made
-let moves = 0;
-
 // Player 1 Add Event Listener to game board choices on a 3x3 grid
-const playerChoices = document.querySelectorAll(".grid-cells");
-
-playerChoices.forEach((choice) => {
-  choice.addEventListener("click", () => {
-    if (choice.getAttribute("data-selected") === "true") {
-      return;
-    }
-
-    const xSpan = document.createElement("span");
-    xSpan.textContent = "X";
-    xSpan.classList.add("grid-text");
-    choice.appendChild(xSpan);
-    choice.setAttribute("data-selected", true); // set data-selected to true when player selects a cell
-
-    moves++;
-
-    if (moves >= 3) {
-      const isWinning = checkWinningCondition(RULES.players.PLAYER_ONE); // check if the player has won
-      if (isWinning) {
-        displayResult(`${RULES.players.PLAYER_ONE} wins!`);
-      }
-    }
-  });
-});
-
-// Player 2 computer logic, attempts to block winning conditions after player 1's turn
-const gridCells = document.querySelectorAll(".grid-cells");
+const cells = document.querySelectorAll(".grid-cells");
 const availableCells = [];
 
-gridCells.forEach((cell) => {
+let moves = 0;
+
+// add click event listener to each cell
+cells.forEach((cell) => {
   cell.addEventListener("click", () => {
+    // check if cell has already been selected
     if (cell.getAttribute("data-selected") === "true") {
       return;
     }
 
+    // mark cell as selected and add X to cell
+    cell.setAttribute("data-selected", true);
+    const xSpan = document.createElement("span");
+    xSpan.textContent = "X";
+    xSpan.classList.add("grid-text");
+    cell.appendChild(xSpan);
+    moves++;
+
+    // Check game state after 5 moves
+    if (moves === 5) {
+      checkGameState();
+    }
+
+    // add available cells to array
+    availableCells.length = 0;
+    cells.forEach((cell) => {
+      if (cell.getAttribute("data-selected") !== "true") {
+        availableCells.push(cell);
+      }
+    });
+
+    // simulate computer's move after player's move
+    const randomIndex = Math.floor(Math.random() * availableCells.length);
+    const computerChoice = availableCells[randomIndex];
     const oSpan = document.createElement("span");
     oSpan.textContent = "O";
     oSpan.classList.add("grid-text");
-    cell.appendChild(oSpan);
-    cell.setAttribute("data-selected", true);
+    computerChoice.appendChild(oSpan);
+    computerChoice.setAttribute("data-selected", true);
     moves++;
 
-    if (moves >= 3) {
-      const isWinning = checkWinningCondition(RULES.players.PLAYER_TWO); // check if the player has won
-      if (isWinning) {
-        displayResult(`${RULES.players.PLAYER_TWO} wins!`);
-      }
+    // Check game state after 5 moves
+    if (moves === 5) {
+      checkGameState();
     }
   });
-
-  if (cell.getAttribute("data-selected") !== "true") {
-    availableCells.push(cell);
-  }
 });
-
-const computerChoice =
-  availableCells[Math.floor(Math.random() * availableCells.length)];
 
 // Winner Condition Logic
 const winningCombinations = [];
@@ -113,7 +103,22 @@ winningCombinations.push([0, 4, 8]);
 winningCombinations.push([2, 4, 6]);
 console.log(winningCombinations);
 
-// Check Winner Condition
+// Function check game State if win or tie
+const checkGameState = () => {
+  if (checkWinningCondition(RULES.players.PLAYER_ONE)) {
+    displayResult(`${RULES.players.PLAYER_ONE} wins!`);
+    return true;
+  } else if (checkWinningCondition(RULES.players.PLAYER_TWO)) {
+    displayResult(`${RULES.players.PLAYER_TWO} wins!`);
+    return true;
+  } else if (moves >= 9) {
+    displayResult("Tie game!");
+    return true;
+  }
+  return false;
+};
+
+// Check Winner Condition Closure
 const checkWinningCondition = (player) => {
   let isWinning = false;
   winningCombinations.forEach((combination) => {
