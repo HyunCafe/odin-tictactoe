@@ -84,19 +84,21 @@ const easyComputerMove = () => {
     return;
   }
 
-  const randomIndex = Math.floor(Math.random() * availableCells.length);
-  const computerChoice = availableCells[randomIndex];
-  const oSpan = document.createElement("span");
-  oSpan.textContent = "O";
-  oSpan.classList.add("grid-text");
-  computerChoice.appendChild(oSpan);
-  computerChoice.setAttribute("data-selected", true);
-  moves++;
+  setTimeout(() => {
+    const randomIndex = Math.floor(Math.random() * availableCells.length);
+    const computerChoice = availableCells[randomIndex];
+    const oSpan = document.createElement("span");
+    oSpan.textContent = "O";
+    oSpan.classList.add("grid-text");
+    computerChoice.appendChild(oSpan);
+    computerChoice.setAttribute("data-selected", true);
+    moves++;
 
-  // Check game state after computer move
-  if (moves >= 5) {
-    checkGameState();
-  }
+    // Check game state after computer move
+    if (moves >= 5) {
+      checkGameState();
+    }
+  }, 600);
 };
 
 // Winner Condition Logic
@@ -155,7 +157,6 @@ const checkWinningCondition = (player) => {
   });
   return isWinning;
 };
-
 
 //TODO:
 
