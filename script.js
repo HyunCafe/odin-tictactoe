@@ -156,9 +156,16 @@ const checkWinningCondition = (player) => {
   return isWinning;
 };
 
+
+//TODO:
+
 // Reset Game Function
 
 // Add best of 3 counter
+
+// Have Current Game end once winning condition is met
+
+// Maybe add a strike through on the winning condition and a you won ir lose screen, that continues on to best of 3 if you click anywhere on the  body
 
 // Computer Logic for Challenging where its optimal logic and Impossible where it cheats
 // in a goofy way, the logic will be easy so it lets player think they can win
