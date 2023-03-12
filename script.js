@@ -10,6 +10,12 @@ const RULES = {
   },
 };
 
+const MODES = {
+  EASY: "easy",
+  MEDIUM: "medium",
+  HARD: "hard",
+};
+
 // Winner Display Message
 const displayResult = (result) => {
   document.getElementsByClassName("main__result").textContent = result;
@@ -36,7 +42,6 @@ createGrid(3, 3);
 // Player 1 Add Event Listener to game board choices on a 3x3 grid
 const cells = document.querySelectorAll(".grid-cells");
 const availableCells = [];
-
 let moves = 0;
 
 // add click event listener to each cell
@@ -56,7 +61,7 @@ cells.forEach((cell) => {
     moves++;
 
     // Check game state after 5 moves
-    if (moves === 5) {
+    if (moves >= 5) {
       checkGameState();
     }
 
@@ -68,22 +73,31 @@ cells.forEach((cell) => {
       }
     });
 
-    // simulate computer's move after player's move
-    const randomIndex = Math.floor(Math.random() * availableCells.length);
-    const computerChoice = availableCells[randomIndex];
-    const oSpan = document.createElement("span");
-    oSpan.textContent = "O";
-    oSpan.classList.add("grid-text");
-    computerChoice.appendChild(oSpan);
-    computerChoice.setAttribute("data-selected", true);
-    moves++;
-
-    // Check game state after 5 moves
-    if (moves === 5) {
-      checkGameState();
-    }
+    // Default / Easy Mode Computer Logic
+    easyComputerMove();
   });
 });
+
+// Computer Logic Easy Mode
+const easyComputerMove = () => {
+  if (availableCells.length === 0) {
+    return;
+  }
+
+  const randomIndex = Math.floor(Math.random() * availableCells.length);
+  const computerChoice = availableCells[randomIndex];
+  const oSpan = document.createElement("span");
+  oSpan.textContent = "O";
+  oSpan.classList.add("grid-text");
+  computerChoice.appendChild(oSpan);
+  computerChoice.setAttribute("data-selected", true);
+  moves++;
+
+  // Check game state after computer move
+  if (moves >= 5) {
+    checkGameState();
+  }
+};
 
 // Winner Condition Logic
 const winningCombinations = [];
