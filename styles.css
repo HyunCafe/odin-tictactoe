@@ -10,7 +10,6 @@
 }
 
 body {
-  background-color: #f0f0f0;
   font-family: Arial, sans-serif;
   background-image: url("assets/bg.jpg");
   background-size: cover;
@@ -18,12 +17,16 @@ body {
   background-position: center;
   color: rgba(56, 189, 242, 0.7);
   height: 100vh;
-  width: 100vw;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Center the main content of the page */
 .main {
   margin: 0 auto;
+  flex: 1;
   max-width: 38em;
   padding: 20px;
 }
@@ -110,15 +113,15 @@ div.grid-cells[data-index="8"] {
   margin-bottom: 0.2em;
   text-align: center;
   font-size: 4rem;
-  color: #f58625;
+  color: rgba(245, 134, 37, 0.8);
 }
 
 /* Style the tracker section */
 .main__tracker {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
-  color: #f22929;
+  margin-top: 1em;
+  color: rgba(242, 41, 41, 0.7);
   font-size: 2.5rem;
   height: 1em;
 }
@@ -136,4 +139,5 @@ div.grid-cells[data-index="8"] {
   text-align: center;
   font-family: "Permanent Marker", cursive;
   letter-spacing: 2px;
+  margin: auto auto 1em;
 }
