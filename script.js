@@ -141,7 +141,7 @@ const checkGameState = () => {
     displayResult(`You Win!`);
     return true;
   } else if (checkWinningCondition(RULES.players.PLAYER_TWO)) {
-    displayResult(`The Computer Wins!`);
+    displayResult(`Computer Wins!`);
     return true;
   } else if (moves >= 9) {
     displayResult("Tie game!");
