@@ -43,12 +43,13 @@ createGrid(3, 3);
 const cells = document.querySelectorAll(".grid-cells");
 const availableCells = [];
 let moves = 0;
+let isComputerMoving = false;
 
 // add click event listener to each cell
 cells.forEach((cell) => {
   cell.addEventListener("click", () => {
-    // check if cell has already been selected
-    if (cell.getAttribute("data-selected") === "true") {
+    // check if cell has already been selected or if computer is currently making a move
+    if (cell.getAttribute("data-selected") === "true" || isComputerMoving) {
       return;
     }
 
@@ -74,19 +75,27 @@ cells.forEach((cell) => {
     });
 
     // Default / Easy Mode Computer Logic
-    easyComputerMove();
+    isComputerMoving = true;
+    easyComputerMove(() => {
+      isComputerMoving = false;
+    });
   });
 });
 
 // Computer Logic Easy Mode
-const easyComputerMove = () => {
+const easyComputerMove = (callback) => {
   if (availableCells.length === 0) {
+    callback();
     return;
   }
 
   setTimeout(() => {
-    const randomIndex = Math.floor(Math.random() * availableCells.length);
-    const computerChoice = availableCells[randomIndex];
+    let computerChoice;
+    do {
+      const randomIndex = Math.floor(Math.random() * availableCells.length);
+      computerChoice = availableCells[randomIndex];
+    } while (computerChoice.getAttribute("data-selected") === "true");
+
     const oSpan = document.createElement("span");
     oSpan.textContent = "O";
     oSpan.classList.add("grid-text");
@@ -98,8 +107,12 @@ const easyComputerMove = () => {
     if (moves >= 5) {
       checkGameState();
     }
+
+    callback();
   }, 600);
 };
+
+
 
 // Winner Condition Logic
 const winningCombinations = [];
