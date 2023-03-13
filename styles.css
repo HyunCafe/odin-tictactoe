@@ -49,6 +49,13 @@ body {
   justify-content: center;
 }
 
+/* Display Result Win or Lose Message */
+.main__result {
+  min-height: 1em;
+  text-align: center;
+  font-size: 2rem;
+}
+
 /* Add hover styles to the grid cells */
 .grid-cells:hover {
   background-color: #e0e0e0;

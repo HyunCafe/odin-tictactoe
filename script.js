@@ -18,7 +18,7 @@ const MODES = {
 
 // Winner Display Message
 const displayResult = (result) => {
-  document.getElementsByClassName("main__result").textContent = result;
+  document.querySelector(".main__result").textContent = result;
 };
 
 // Create the Board through the DOM
@@ -48,8 +48,8 @@ let isComputerMoving = false;
 // add click event listener to each cell
 cells.forEach((cell) => {
   cell.addEventListener("click", () => {
-    // check if cell has already been selected or if computer is currently making a move
-    if (cell.getAttribute("data-selected") === "true" || isComputerMoving) {
+    // check if cell has already been selected or game is already won
+    if (cell.getAttribute("data-selected") === "true" || checkGameState()) {
       return;
     }
 
@@ -75,10 +75,12 @@ cells.forEach((cell) => {
     });
 
     // Default / Easy Mode Computer Logic
-    isComputerMoving = true;
-    easyComputerMove(() => {
-      isComputerMoving = false;
-    });
+    easyComputerMove();
+
+    // Check game state after computer move
+    if (moves >= 5) {
+      checkGameState();
+    }
   });
 });
 
@@ -90,6 +92,10 @@ const easyComputerMove = (callback) => {
   }
 
   setTimeout(() => {
+    if (checkGameState()) {
+      return;
+    }
+
     let computerChoice;
     do {
       const randomIndex = Math.floor(Math.random() * availableCells.length);
@@ -108,11 +114,9 @@ const easyComputerMove = (callback) => {
       checkGameState();
     }
 
-    callback();
+    // callback();
   }, 600);
 };
-
-
 
 // Winner Condition Logic
 const winningCombinations = [];
@@ -130,15 +134,14 @@ for (let i = 0; i < 3; i++) {
 // diagonals
 winningCombinations.push([0, 4, 8]);
 winningCombinations.push([2, 4, 6]);
-console.log(winningCombinations);
 
 // Function check game State if win or tie
 const checkGameState = () => {
   if (checkWinningCondition(RULES.players.PLAYER_ONE)) {
-    displayResult(`${RULES.players.PLAYER_ONE} wins!`);
+    displayResult(`You Win!`);
     return true;
   } else if (checkWinningCondition(RULES.players.PLAYER_TWO)) {
-    displayResult(`${RULES.players.PLAYER_TWO} wins!`);
+    displayResult(`The Computer Wins!`);
     return true;
   } else if (moves >= 9) {
     displayResult("Tie game!");
@@ -159,11 +162,9 @@ const checkWinningCondition = (player) => {
         cell.textContent === player &&
         cell.getAttribute("data-selected") === "true"
     );
-    console.log(`isSame: ${isSame}`);
 
     if (isSame) {
       isWinning = true;
-      console.log("You win!");
       displayResult(`${player} wins!`);
       return;
     }
