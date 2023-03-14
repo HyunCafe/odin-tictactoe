@@ -18,21 +18,22 @@ const MODES = {
 
 // Winner Display Message
 const displayResult = (result) => {
-  // Get the result element
   const resultOverlay = document.querySelector(".main__result");
 
   // Update the result text and show it
   resultOverlay.textContent = result;
   resultOverlay.style.display = "block";
 
-  // Add a click event listener to the body to hide the result overlay when clicked
-  document.body.addEventListener("click", () => {
-    const overlayStyle = getComputedStyle(resultOverlay);
-    if (overlayStyle.display === "block") {
-      resultOverlay.style.display = "none";
-      resetGame();
-    }
-  });
+  setTimeout(() => {
+    // Add a click event listener to the body to hide the result overlay when clicked
+    document.body.addEventListener("click", () => {
+      const overlayStyle = getComputedStyle(resultOverlay);
+      if (overlayStyle.display === "block") {
+        resultOverlay.style.display = "none";
+        resetGame();
+      }
+    });
+  }, 500);
 };
 
 // Tracker for Wins and Losses
@@ -74,7 +75,11 @@ let isComputerMoving = false;
 cells.forEach((cell) => {
   cell.addEventListener("click", () => {
     // check if cell has already been selected or game is already won
-    if (cell.getAttribute("data-selected") === "true" || checkGameState()) {
+    if (
+      cell.getAttribute("data-selected") === "true" ||
+      checkGameState() ||
+      isComputerMoving
+    ) {
       return;
     }
 
@@ -86,7 +91,6 @@ cells.forEach((cell) => {
     cell.appendChild(xSpan);
     moves++;
 
-    // Check game state after 5 moves
     if (moves >= 5) {
       checkGameState();
     }
@@ -99,10 +103,8 @@ cells.forEach((cell) => {
       }
     });
 
-    // Default / Easy Mode Computer Logic
     easyComputerMove();
 
-    // Check game state after computer move
     if (moves >= 5) {
       checkGameState();
     }
@@ -115,6 +117,7 @@ const easyComputerMove = () => {
     return;
   }
 
+  isComputerMoving = true;
   setTimeout(() => {
     if (checkGameState()) {
       return;
@@ -133,12 +136,11 @@ const easyComputerMove = () => {
     computerChoice.setAttribute("data-selected", true);
     moves++;
 
-    // Check game state after computer move
     if (moves >= 5) {
       checkGameState();
     }
 
-    // ();
+    isComputerMoving = false;
   }, 600);
 };
 
@@ -212,14 +214,17 @@ const checkWinningCondition = (player) => {
   return isWinning;
 };
 
+// Reset Game Function
 const resetGame = () => {
-  // Get all grid cells
   const gridCells = document.querySelectorAll(".grid-cells");
-
-  // Clear the values of the grid cells
   gridCells.forEach((cell) => {
     cell.textContent = "";
+    cell.setAttribute("data-selected", false);
   });
+  moves = 0;
+  isUpdated = false;
+  isComputerMoving = false;
+  availableCells.length = 0;
 };
 
 //TODO:
