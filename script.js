@@ -420,7 +420,7 @@ const resetGame = () => {
 
   // Set current computer mode to previous value
   const modeRadios = document.querySelectorAll('input[name="mode"]');
-  let selectedMode = MODES.EASY; 
+  let selectedMode = MODES.EASY;
   for (let i = 0; i < modeRadios.length; i++) {
     if (modeRadios[i].checked) {
       selectedMode = modeRadios[i].value;
@@ -435,8 +435,6 @@ const resetButton = document.querySelector(".button-reset");
 resetButton.addEventListener("click", resetGame);
 
 //TODO:
-
-// Reset Game Function
 
 // Add best of 3 counter
 
