@@ -18,7 +18,32 @@ const MODES = {
 
 // Winner Display Message
 const displayResult = (result) => {
-  document.querySelector(".main__result").textContent = result;
+  // Get the result element
+  const resultOverlay = document.querySelector(".main__result");
+
+  // Update the result text and show it
+  resultOverlay.textContent = result;
+  resultOverlay.style.display = "block";
+
+  // Add a click event listener to the body to hide the result overlay when clicked
+  document.body.addEventListener("click", () => {
+    const overlayStyle = getComputedStyle(resultOverlay);
+    if (overlayStyle.display === "block") {
+      resultOverlay.style.display = "none";
+      resetGame();
+    }
+  });
+};
+
+// Tracker for Wins and Losses
+let wins = 0;
+let losses = 0;
+let ties = 0;
+
+const trackResult = () => {
+  document.querySelector(".wins").textContent = `Wins ${wins}`;
+  document.querySelector(".losses").textContent = `Losses ${losses}`;
+  document.querySelector(".ties").textContent = `Ties ${ties}`;
 };
 
 // Create the Board through the DOM
@@ -85,9 +110,8 @@ cells.forEach((cell) => {
 });
 
 // Computer Logic Easy Mode
-const easyComputerMove = (callback) => {
+const easyComputerMove = () => {
   if (availableCells.length === 0) {
-    callback();
     return;
   }
 
@@ -114,7 +138,7 @@ const easyComputerMove = (callback) => {
       checkGameState();
     }
 
-    // callback();
+    // ();
   }, 600);
 };
 
@@ -135,16 +159,32 @@ for (let i = 0; i < 3; i++) {
 winningCombinations.push([0, 4, 8]);
 winningCombinations.push([2, 4, 6]);
 
-// Function check game State if win or tie
+let isUpdated = false;
+
 const checkGameState = () => {
   if (checkWinningCondition(RULES.players.PLAYER_ONE)) {
     displayResult(`You Win!`);
+    if (!isUpdated) {
+      wins++;
+      isUpdated = true;
+    }
+    trackResult();
     return true;
   } else if (checkWinningCondition(RULES.players.PLAYER_TWO)) {
-    displayResult(`Computer Wins!`);
+    displayResult(`The Computer Wins!`);
+    if (!isUpdated) {
+      losses++;
+      isUpdated = true;
+    }
+    trackResult();
     return true;
   } else if (moves >= 9) {
     displayResult("Tie game!");
+    if (!isUpdated) {
+      ties++;
+      isUpdated = true;
+    }
+    trackResult();
     return true;
   }
   return false;
@@ -172,13 +212,21 @@ const checkWinningCondition = (player) => {
   return isWinning;
 };
 
+const resetGame = () => {
+  // Get all grid cells
+  const gridCells = document.querySelectorAll(".grid-cells");
+
+  // Clear the values of the grid cells
+  gridCells.forEach((cell) => {
+    cell.textContent = "";
+  });
+};
+
 //TODO:
 
 // Reset Game Function
 
 // Add best of 3 counter
-
-// Have Current Game end once winning condition is met
 
 // Maybe add a strike through on the winning condition and a you won ir lose screen, that continues on to best of 3 if you click anywhere on the  body
 

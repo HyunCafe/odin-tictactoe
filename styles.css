@@ -31,9 +31,13 @@ body {
   transform: translate(-50%, -50%);
   font-size: 6vw;
   color: rgba(245, 134, 37, 0.8);
-  width: 30%;
-  text-align: center;
+  width: 100%;
+  height: 100%;
   display: none;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  padding-top: 25%;
 }
 
 /* Style the tracker section */
