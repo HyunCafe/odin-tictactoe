@@ -50,19 +50,24 @@ const trackResult = () => {
 // Create the Board through the DOM
 const createGrid = (rows, cols) => {
   const mainGrid = document.querySelector(".main__game");
-  let cellIndex = 0;
+  
+  // Check if the grid cells have already been created and appended
+  if (mainGrid.childElementCount === 0) {
+    let cellIndex = 0;
 
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      const gridCell = document.createElement("div");
-      gridCell.classList.add("grid-cells");
-      gridCell.setAttribute("data-index", cellIndex);
-      mainGrid.append(gridCell);
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const gridCell = document.createElement("div");
+        gridCell.classList.add("grid-cells");
+        gridCell.setAttribute("data-index", cellIndex);
+        mainGrid.append(gridCell);
 
-      cellIndex++;
+        cellIndex++;
+      }
     }
   }
 };
+
 createGrid(3, 3);
 
 // Player 1 Add Event Listener to game board choices on a 3x3 grid
@@ -88,7 +93,7 @@ cells.forEach((cell) => {
     const xSpan = document.createElement("span");
     xSpan.textContent = "X";
     xSpan.classList.add("grid-text");
-    cell.appendChild(xSpan);
+    cell.append(xSpan);
     moves++;
 
     if (moves >= 5) {
@@ -134,7 +139,7 @@ const easyComputerMove = () => {
     const oSpan = document.createElement("span");
     oSpan.textContent = "O";
     oSpan.classList.add("grid-text");
-    computerChoice.appendChild(oSpan);
+    computerChoice.append(oSpan);
     computerChoice.setAttribute("data-selected", true);
     moves++;
 
