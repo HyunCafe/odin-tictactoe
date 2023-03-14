@@ -133,6 +133,37 @@ div.grid-cells[data-index="8"] {
   border-bottom: none;
 }
 
+/* Game Modes */
+
+.game-modes {
+  position: relative;
+  top: 14%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+}
+
+button {
+  color: #8041bf;
+  background-color: transparent;
+  padding: 0.1em;
+  border: #c3b6f2 4px solid;
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+button:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.button-reset {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
 /* Footer */
 .site-footer {
   background: transparent;
@@ -141,7 +172,7 @@ div.grid-cells[data-index="8"] {
   text-align: center;
   font-family: "Permanent Marker", cursive;
   letter-spacing: 2px;
-  margin: auto auto 1em;
+  margin: auto auto 0.7em;
 }
 
 @media only screen and (max-width: 500px) {
@@ -175,5 +206,10 @@ div.grid-cells[data-index="8"] {
 
   .main {
     margin: 0 auto;
+  }
+
+  .game-modes {
+    top: 28%;
+    right: 4%;
   }
 }
