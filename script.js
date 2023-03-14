@@ -136,17 +136,14 @@ const impossibleBtn = document.querySelector(".button-impossible");
 // Add event listeners to buttons
 easyBtn.addEventListener("click", () => {
   currentMode = MODES.EASY;
-  console.log("Current mode set to Easy");
 });
 
 hardBtn.addEventListener("click", () => {
   currentMode = MODES.HARD;
-  console.log("Current mode set to Hard");
 });
 
 impossibleBtn.addEventListener("click", () => {
   currentMode = MODES.IMPOSSIBLE;
-  console.log("Current mode set to Impossible");
 });
 
 const getAvailableCells = () => {
@@ -158,13 +155,10 @@ const getAvailableCells = () => {
 // Use the currentMode variable to determine the computer move logic
 const computerMove = () => {
   if (currentMode === MODES.EASY) {
-    console.log("Using Easy Mode computer move logic");
     easyComputerMove();
   } else if (currentMode === MODES.HARD) {
-    console.log("Using Hard Mode computer move logic");
     hardComputerMove();
   } else if (currentMode === MODES.IMPOSSIBLE) {
-    console.log("Using Impossible Mode computer move logic");
     impossibleComputerMove();
   }
 };
