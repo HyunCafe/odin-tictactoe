@@ -124,10 +124,12 @@ const easyComputerMove = () => {
     }
 
     let computerChoice;
-    do {
-      const randomIndex = Math.floor(Math.random() * availableCells.length);
-      computerChoice = availableCells[randomIndex];
-    } while (computerChoice.getAttribute("data-selected") === "true");
+    if (availableCells.length > 0) {
+      do {
+        const randomIndex = Math.floor(Math.random() * availableCells.length);
+        computerChoice = availableCells[randomIndex];
+      } while (computerChoice.getAttribute("data-selected") === "true");
+    }
 
     const oSpan = document.createElement("span");
     oSpan.textContent = "O";
