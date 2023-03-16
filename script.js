@@ -227,13 +227,14 @@ const easyComputerMove = () => {
         });
       }
     }
-
-    const oSpan = document.createElement("span");
-    oSpan.textContent = "O";
-    oSpan.classList.add("grid-text");
-    computerChoice.append(oSpan);
-    computerChoice.setAttribute("data-selected", true);
-    moves++;
+    if (computerChoice) {
+      const oSpan = document.createElement("span");
+      oSpan.textContent = "O";
+      oSpan.classList.add("grid-text");
+      computerChoice.append(oSpan);
+      computerChoice.setAttribute("data-selected", true);
+      moves++;
+    }
 
     if (moves >= 5) {
       checkGameState();
@@ -255,58 +256,24 @@ const hardComputerMove = () => {
       return;
     }
 
+    let bestScore = -Infinity;
     let computerChoice;
 
-    // Check if the computer can win with the next move
-    const nextMoveWins = winningCombinations.some((combination) => {
-      const cells = combination.map((index) =>
-        document.querySelector(`[data-index="${index}"]`)
-      );
-      const computerCells = cells.filter(
-        (cell) =>
-          cell.getAttribute("data-selected") === "true" &&
-          cell.textContent === "O"
-      );
-      const emptyCell = cells.find(
-        (cell) => cell.getAttribute("data-selected") !== "true"
-      );
+    const currentBoard = Array.from(
+      { length: 9 },
+      (_, i) =>
+        document.querySelector(`[data-index="${i}"]`).textContent || null
+    );
 
-      if (computerCells.length === 2 && emptyCell) {
-        computerChoice = emptyCell;
-        return true;
-      }
-      return false;
-    });
-
-    // Check if the player can win with the next move and block it
-    if (!nextMoveWins) {
-      const blockingMoves = [];
-      winningCombinations.forEach((combination) => {
-        const cells = combination.map((index) =>
-          document.querySelector(`[data-index="${index}"]`)
-        );
-        const playerCells = cells.filter(
-          (cell) =>
-            cell.getAttribute("data-selected") === "true" &&
-            cell.textContent === "X"
-        );
-        const emptyCell = cells.find(
-          (cell) => cell.getAttribute("data-selected") !== "true"
-        );
-
-        if (playerCells.length === 2 && emptyCell) {
-          blockingMoves.push(emptyCell);
+    for (let i = 0; i < currentBoard.length; i++) {
+      if (currentBoard[i] === null) {
+        currentBoard[i] = "O";
+        const score = minimax(currentBoard, 0, false);
+        currentBoard[i] = null;
+        if (score > bestScore) {
+          bestScore = score;
+          computerChoice = document.querySelector(`[data-index="${i}"]`);
         }
-      });
-
-      if (blockingMoves.length > 0) {
-        // Choose a random blocking move
-        const randomIndex = Math.floor(Math.random() * blockingMoves.length);
-        computerChoice = blockingMoves[randomIndex];
-      } else {
-        // Choose a random move
-        const randomIndex = Math.floor(Math.random() * availableCells.length);
-        computerChoice = availableCells[randomIndex];
       }
     }
 
@@ -324,6 +291,47 @@ const hardComputerMove = () => {
     isComputerMoving = false;
   }, 600);
 };
+
+function evaluateBoard(board) {
+  for (let combination of winningCombinations) {
+    const [a, b, c] = combination;
+    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+      return board[a];
+    }
+  }
+  return null;
+}
+
+function minimax(board, depth, isMaximizing) {
+  const winner = evaluateBoard(board);
+  if (winner === "X") return -10 + depth;
+  if (winner === "O") return 10 - depth;
+  if (!board.includes(null)) return 0;
+
+  if (isMaximizing) {
+    let bestScore = -Infinity;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === null) {
+        board[i] = "O";
+        const score = minimax(board, depth + 1, false);
+        board[i] = null;
+        bestScore = Math.max(bestScore, score);
+      }
+    }
+    return bestScore;
+  } else {
+    let bestScore = Infinity;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === null) {
+        board[i] = "X";
+        const score = minimax(board, depth + 1, true);
+        board[i] = null;
+        bestScore = Math.min(bestScore, score);
+      }
+    }
+    return bestScore;
+  }
+}
 
 // Winner Condition Logic
 const winningCombinations = [
