@@ -15,7 +15,6 @@ Through the development of this web-based tic-tac-toe game using HTML, CSS, and 
 * Minmax algorithm implementation for hard mode.
 
 ## Project Timeline
-* 
 #### Mar 7, 2023
 * feat: Initial commit with project setup
 
