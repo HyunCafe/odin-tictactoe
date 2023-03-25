@@ -14,6 +14,11 @@ Through the development of this web-based tic-tac-toe game using HTML, CSS, and 
 * Refactoring of code for better readability and Hard Mode and Reset functionality
 * Minmax algorithm implementation for hard mode.
 
+![Project Animation](assets/tictactoe.gif)
+<p align="center">
+<a href="https://hyuncafe.github.io/odin-tictactoe/" target="_blank">Live Link</a>
+</p>
+
 ## TODO:
 * Finish logic for impossible mode
 
