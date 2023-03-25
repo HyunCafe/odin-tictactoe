@@ -14,6 +14,9 @@ Through the development of this web-based tic-tac-toe game using HTML, CSS, and 
 * Refactoring of code for better readability and Hard Mode and Reset functionality
 * Minmax algorithm implementation for hard mode.
 
+## TODO:
+* Finish logic for impossible mode
+
 ## Project Timeline
 #### Mar 7, 2023
 * feat: Initial commit with project setup
@@ -55,3 +58,6 @@ Through the development of this web-based tic-tac-toe game using HTML, CSS, and 
 
 #### Mar 14, 2023
 * Refactor: Refactor hard mode logic to use minmax algorithm
+
+#### Mar 25, 2023
+* Fix: Fixed breakpoint and change to fully BEM naming

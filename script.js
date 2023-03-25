@@ -129,9 +129,9 @@ const MODES = {
 };
 
 // Get mode buttons
-const easyBtn = document.querySelector(".button-easy");
-const hardBtn = document.querySelector(".button-hard");
-const impossibleBtn = document.querySelector(".button-impossible");
+const easyBtn = document.querySelector(".main__button main__button--easy");
+const hardBtn = document.querySelector(".main__button main__button--hard");
+const impossibleBtn = document.querySelector(".main__button main__button--impossible");
 
 // Add event listeners to buttons
 easyBtn.addEventListener("click", () => {

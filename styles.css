@@ -135,7 +135,7 @@ div.grid-cells[data-index="8"] {
 
 /* Game Modes */
 
-.game-modes {
+.main__game-modes {
   position: relative;
   top: 14%;
   display: grid;
@@ -159,7 +159,7 @@ button:hover {
   cursor: pointer;
 }
 
-.button-reset {
+.main__button--reset {
   grid-column: 2 / 3;
   grid-row: 2 / 3;
 }
@@ -175,7 +175,7 @@ button:hover {
   margin: auto auto 0.7em;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 650px) {
   html,
   body {
     overflow: hidden;
@@ -208,7 +208,7 @@ button:hover {
     margin: 0 auto;
   }
 
-  .game-modes {
+  .main__game-modes {
     top: 28%;
     right: 4%;
   }
