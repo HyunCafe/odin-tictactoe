@@ -1,4 +1,4 @@
-# odin-tictactoe
+# odin-tictactoe (12 weeks into my coding journey)
 Through the development of this web-based tic-tac-toe game using HTML, CSS, and JavaScript, I have gained expertise in implementing game logic, state management, user interface design, and responsive web design. My use of descriptive and concise commit messages reflects my understanding of the importance of clean code and effective communication within a team environment. The project timeline showcases my ability to plan, execute, and refactor a project while implementing various features and functionalities. I am committed to producing high-quality code and effective teamwork and am confident in my abilities to contribute to any web development team.
 
 ## Summary of Key Features:
