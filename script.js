@@ -68,44 +68,47 @@ const availableCells = [];
 let moves = 0;
 let isComputerMoving = false;
 
-// add click event listener to each cell
-cells.forEach((cell) => {
-  cell.addEventListener("click", () => {
-    // check if cell has already been selected or game is already won
-    if (
-      cell.getAttribute("data-selected") === "true" ||
-      checkGameState() ||
-      isComputerMoving
-    ) {
-      return;
-    }
+const handleCellSelection = (cell) => {
+  // check if cell has already been selected or game is already won
+  if (
+    cell.getAttribute("data-selected") === "true" ||
+    checkGameState() ||
+    isComputerMoving
+  ) {
+    return;
+  }
 
-    // mark cell as selected and add X to cell
-    cell.setAttribute("data-selected", true);
-    const xSpan = document.createElement("span");
-    xSpan.textContent = "X";
-    xSpan.classList.add("grid-text");
-    cell.append(xSpan);
-    moves++;
+  // mark cell as selected and add X to cell
+  cell.setAttribute("data-selected", true);
+  const xSpan = document.createElement("span");
+  xSpan.textContent = "X";
+  xSpan.classList.add("grid-text");
+  cell.append(xSpan);
+  moves++;
 
-    if (moves >= 5) {
-      checkGameState();
-    }
+  if (moves >= 5) {
+    checkGameState();
+  }
 
-    // add available cells to array
-    availableCells.length = 0;
-    cells.forEach((cell) => {
-      if (cell.getAttribute("data-selected") !== "true") {
-        availableCells.push(cell);
-      }
-    });
-
-    computerMove();
-
-    if (moves >= 5) {
-      checkGameState();
+  // add available cells to array
+  availableCells.length = 0;
+  cells.forEach((cell) => {
+    if (cell.getAttribute("data-selected") !== "true") {
+      availableCells.push(cell);
     }
   });
+
+  computerMove();
+
+  if (moves >= 5) {
+    checkGameState();
+  }
+};
+
+// add click event listener to each cell
+cells.forEach((cell) => {
+  cell.addEventListener("click", () => handleCellSelection(cell));
+  cell.addEventListener("touchstart", () => handleCellSelection(cell));
 });
 
 // ----------------------- Game Logic Section  ----------------------- //
@@ -129,9 +132,9 @@ const MODES = {
 };
 
 // Get mode buttons
-const easyBtn = document.querySelector(".main__button main__button--easy");
-const hardBtn = document.querySelector(".main__button main__button--hard");
-const impossibleBtn = document.querySelector(".main__button main__button--impossible");
+const easyBtn = document.querySelector(".main__button--easy");
+const hardBtn = document.querySelector(".main__button--hard");
+const impossibleBtn = document.querySelector(".main__button--impossible");
 
 // Add event listeners to buttons
 easyBtn.addEventListener("click", () => {
@@ -439,7 +442,7 @@ const resetGame = () => {
 };
 
 // Reset button event listener
-const resetButton = document.querySelector(".button-reset");
+const resetButton = document.querySelector(".main__button--reset");
 resetButton.addEventListener("click", resetGame);
 
 //TODO:

@@ -175,7 +175,7 @@ button:hover {
   margin: auto auto 0.7em;
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 1150px) {
   html,
   body {
     overflow: hidden;
@@ -183,12 +183,13 @@ button:hover {
   }
 
   .main__result {
+    padding-top: 6em;
     font-size: 7.5vh;
-    width: 80%;
+    width: 100%;
   }
 
   .main__tracker {
-    font-size: 4vh;
+    font-size: 7vh;
     margin-right: 1em;
   }
 
@@ -211,5 +212,12 @@ button:hover {
   .main__game-modes {
     top: 28%;
     right: 4%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .main__tracker {
+    font-size: 4vh;
+    margin-right: 1em;
   }
 }
