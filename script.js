@@ -30,9 +30,15 @@ let losses = 0;
 let ties = 0;
 
 const trackResult = () => {
-  document.querySelector(".wins").textContent = `Wins ${wins}`;
-  document.querySelector(".losses").textContent = `Losses ${losses}`;
-  document.querySelector(".ties").textContent = `Ties ${ties}`;
+  const winsEl = document.querySelector(".main__tracker-item--wins");
+  const lossesEl = document.querySelector(".main__tracker-item--losses");
+  const tiesEl = document.querySelector(".main__tracker-item--ties");
+
+  if (winsEl && lossesEl && tiesEl) {
+    winsEl.textContent = `Wins ${wins}`;
+    lossesEl.textContent = `Losses ${losses}`;
+    tiesEl.textContent = `Ties ${ties}`;
+  }
 };
 
 // ----------------------- Create Grid Section  ----------------------- //
@@ -312,6 +318,25 @@ winningCombinations.push([0, 4, 8]);
 winningCombinations.push([2, 4, 6]);
 
 let isUpdated = false;
+const checkWinningCondition = (player) => {
+  let isWinning = false;
+  winningCombinations.forEach((combination) => {
+    const cells = combination.map((index) =>
+      document.querySelector(`[data-index="${index}"]`)
+    );
+    const isSame = cells.every(
+      (cell) =>
+        cell.textContent === player &&
+        cell.getAttribute("data-selected") === "true"
+    );
+
+    if (isSame) {
+      isWinning = true;
+      return;
+    }
+  });
+  return isWinning;
+};
 
 const checkGameState = () => {
   if (checkWinningCondition(RULES.players.PLAYER_ONE)) {
@@ -342,31 +367,8 @@ const checkGameState = () => {
   return false;
 };
 
-// Check Winner Condition Closure
-const checkWinningCondition = (player) => {
-  let isWinning = false;
-  winningCombinations.forEach((combination) => {
-    const cells = combination.map((index) =>
-      document.querySelector(`[data-index="${index}"]`)
-    );
-    const isSame = cells.every(
-      (cell) =>
-        cell.textContent === player &&
-        cell.getAttribute("data-selected") === "true"
-    );
-
-    if (isSame) {
-      isWinning = true;
-      displayResult(`${player} wins!`);
-      return;
-    }
-  });
-  return isWinning;
-};
-
 // ----------------------- Player Event Listener Section  ----------------------- //
 
-// Player 1 Add Event Listener to game board choices on a 3x3 grid
 const cells = document.querySelectorAll(".grid-cells");
 const availableCells = [];
 let moves = 0;
