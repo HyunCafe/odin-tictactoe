@@ -60,57 +60,6 @@ const createGrid = (rows, cols) => {
 
 createGrid(3, 3);
 
-// ----------------------- Player Event Listener Section  ----------------------- //
-
-// Player 1 Add Event Listener to game board choices on a 3x3 grid
-const cells = document.querySelectorAll(".grid-cells");
-const availableCells = [];
-let moves = 0;
-let isComputerMoving = false;
-
-const handleCellSelection = (cell) => {
-  // check if cell has already been selected or game is already won
-  if (
-    cell.getAttribute("data-selected") === "true" ||
-    checkGameState() ||
-    isComputerMoving
-  ) {
-    return;
-  }
-
-  // mark cell as selected and add X to cell
-  cell.setAttribute("data-selected", true);
-  const xSpan = document.createElement("span");
-  xSpan.textContent = "X";
-  xSpan.classList.add("grid-text");
-  cell.append(xSpan);
-  moves++;
-
-  if (moves >= 5) {
-    checkGameState();
-  }
-
-  // add available cells to array
-  availableCells.length = 0;
-  cells.forEach((cell) => {
-    if (cell.getAttribute("data-selected") !== "true") {
-      availableCells.push(cell);
-    }
-  });
-
-  computerMove();
-
-  if (moves >= 5) {
-    checkGameState();
-  }
-};
-
-// add click event listener to each cell
-cells.forEach((cell) => {
-  cell.addEventListener("click", () => handleCellSelection(cell));
-  cell.addEventListener("touchstart", () => handleCellSelection(cell));
-});
-
 // ----------------------- Game Logic Section  ----------------------- //
 
 // Define rules object
@@ -414,6 +363,57 @@ const checkWinningCondition = (player) => {
   });
   return isWinning;
 };
+
+// ----------------------- Player Event Listener Section  ----------------------- //
+
+// Player 1 Add Event Listener to game board choices on a 3x3 grid
+const cells = document.querySelectorAll(".grid-cells");
+const availableCells = [];
+let moves = 0;
+let isComputerMoving = false;
+
+const handleCellSelection = (cell) => {
+  // check if cell has already been selected or game is already won
+  if (
+    cell.getAttribute("data-selected") === "true" ||
+    checkGameState() ||
+    isComputerMoving
+  ) {
+    return;
+  }
+
+  // mark cell as selected and add X to cell
+  cell.setAttribute("data-selected", true);
+  const xSpan = document.createElement("span");
+  xSpan.textContent = "X";
+  xSpan.classList.add("grid-text");
+  cell.append(xSpan);
+  moves++;
+
+  if (moves >= 5) {
+    checkGameState();
+  }
+
+  // add available cells to array
+  availableCells.length = 0;
+  cells.forEach((cell) => {
+    if (cell.getAttribute("data-selected") !== "true") {
+      availableCells.push(cell);
+    }
+  });
+
+  computerMove();
+
+  if (moves >= 5) {
+    checkGameState();
+  }
+};
+
+// add click event listener to each cell
+cells.forEach((cell) => {
+  cell.addEventListener("click", () => handleCellSelection(cell));
+  cell.addEventListener("touchstart", () => handleCellSelection(cell));
+});
 
 // ----------------------- Others Section  ----------------------- //
 
