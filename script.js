@@ -393,7 +393,9 @@ const handleCellSelection = (cell) => {
   moves++;
 
   if (moves >= 5) {
-    checkGameState();
+    setTimeout(() => {
+      checkGameState();
+    }, 0);
   }
 
   // add available cells to array
@@ -407,9 +409,12 @@ const handleCellSelection = (cell) => {
   computerMove();
 
   if (moves >= 5) {
-    checkGameState();
+    setTimeout(() => {
+      checkGameState();
+    }, 0);
   }
 };
+
 
 // add click event listener to each cell
 cells.forEach((cell) => {
