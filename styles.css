@@ -40,6 +40,17 @@ body {
   padding-top: 20%;
 }
 
+/* Display Popup for Mode Difficulty */
+.popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5rem;
+  color: red;
+}
+
+
 /* Style the tracker section */
 .main__tracker {
   display: flex;

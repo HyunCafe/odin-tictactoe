@@ -24,6 +24,18 @@ const displayResult = (result) => {
   }, 500);
 };
 
+const displayPopup = (message) => {
+  const popup = document.createElement("div");
+  popup.classList.add("popup");
+  popup.textContent = message;
+  document.body.appendChild(popup);
+  
+  setTimeout(() => {
+    popup.remove();
+    resetGame();
+  }, 1000);
+};
+
 // Tracker for Wins and Losses
 let wins = 0;
 let losses = 0;
@@ -94,14 +106,17 @@ const impossibleBtn = document.querySelector(".main__button--impossible");
 // Add event listeners to buttons
 easyBtn.addEventListener("click", () => {
   currentMode = MODES.EASY;
+  displayPopup('Easy Difficulty Active')
 });
 
 hardBtn.addEventListener("click", () => {
   currentMode = MODES.HARD;
+    displayPopup('Hard Difficulty Active')
 });
 
 impossibleBtn.addEventListener("click", () => {
   currentMode = MODES.IMPOSSIBLE;
+    displayPopup('Unavailable Future ToDo')
 });
 
 const getAvailableCells = () => {
@@ -414,7 +429,6 @@ const handleCellSelection = (cell) => {
     }, 0);
   }
 };
-
 
 // add click event listener to each cell
 cells.forEach((cell) => {
